@@ -14,6 +14,8 @@ correctGuesses = 0
 guessLetters = []
 blanks = []
 
+
+
 #function that prints the board dependent on the number of guesses.
 def Board(guesses):
     if guesses == 0:
@@ -39,6 +41,16 @@ def Board(guesses):
 def randomWord(dictionary):
     return numpy.random.choice(dictionary)
 gameWord = randomWord(wordList)
+
+#2 player function
+numPlayers = raw_input("Would you like to play 2-player mode?(y/n): ")
+if numPlayers == 'y':
+    gameWord = raw_input("Please type the word you would like the second player to guess: ").upper()
+    emptyLine = 0
+    while emptyLine < 500:
+        print(' ')
+        emptyLine += 1
+
 
 #sticking each character in the randomly selected word in one of the blank lists
 for char in gameWord:

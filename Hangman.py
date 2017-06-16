@@ -87,7 +87,9 @@ while guesses < 7:
 else:
     #finishes game if you lose
     Board(guesses)
+
     print("You lose!")
+    print("The word was %s!" % gameWord)
 
 
 

@@ -67,7 +67,7 @@ movieDict = dict(zip(movieNames['id'],movieNames['name']))  # replace 0 with the
 # Load the movie Data (u.data) with just columns 0, 1, and 2 (user, movie, rating) all are np.int
 movieData = np.loadtxt(fname='./ml-100k/u.data',dtype={'names': ('user','movie','rating'), 'formats': (np.int,np.int,np.int)},
                        delimiter="\t", usecols=(0, 1, 2))  # replace 0 with the correct cod eto load the movie data
-
+#print (movieNames)
 #print(movieData)
 #print(movieNames)
 
@@ -102,25 +102,25 @@ for key in movieRatingTemp:
     if key not in movieRating:
         movieRating[key] = []
     movieRating[key] = np.average(movieRatingTemp[key])
+    movieRatingCount[key] = len(movieRatingTemp[key])
 #print (movieRating)
 
 
 # Get sorting ratings
 # https://www.saltycrane.com/blog/2007/09/how-to-sort-python-dictionary-by-keys/
 movieRatingS = sorted(movieRating.iteritems(), key=lambda (k,v): (v,k), reverse=True)
-#print(movieRatingS)
+
 # Top 10 Movies
 print("Top Ten Movies:")
 # Print the top 10 movies
 # It should print the number, title, id, rating and count of reviews for each movie
 # ie 2. Someone Else's America (1995) (ID: 1599) Rating: 5.0 Count: 1
-j = 0
-for i in movieRatingS:
 
-    if j == 9:
-        break
-    print(j+1,movieNames)
-    j += 1
+for j in range(0,10):
+    print(str(j+1) + '. ' + str(movieDict[movieRatingS[j][0]]) + ' (ID: ' + str(movieRatingS[j][0]) + ')  '
+          + 'Rating: ' + str(movieRatingS[j][1]) + ' ' + 'Count: ' + str(movieRatingCount[movieRatingS[j][0]]))
+
+
 
 
 # Top 10 Movies with at least 100 ratings    
@@ -129,8 +129,16 @@ print("\n\nTop Ten movies with at least 100 ratings:")
 # The number should be the movie's absolute rank
 # ie (16. Close Shave, A (1995) (ID: 408) Rating: 4.49 Count: 112)
 # Number 16 is first in this list because it's the first movie with over 100 ratings
+numP = 0
+listI = 0
+while numP < 11:
+    movieKey = movieRatingS[listI][0]
+    if movieRatingCount[movieKey] > 99:
+        print(str(listI + 1) + '. ' + str(movieDict[movieRatingS[listI][0]]) + ' (ID: ' + str(movieKey) + ')  '
+              + 'Rating: ' + str(movieRatingS[listI][1]) + ' ' + 'Count: ' + str(movieRatingCount[[movieKey][0]]))
+        numP +=1
+    listI += 1
 
-exit(0) # Remove this line after we finish phase 2
 
 ########################################################
 # Begin Phase 3

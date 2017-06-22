@@ -7,14 +7,14 @@ import numpy as np
 
 def findSimilar(iLike, userLikes):
     # Create an And similarity
-    similarityAnd = 0 # replace 0 with the correct code
+    similarityAnd = iLike * userLikes # replace 0 with the correct code
     # Create a per user sum
-    similaritySum = 0 # replace 0 with the correct code
+    similaritySum = np.sum(userLikes,1) # replace 0 with the correct code
     # Create an Or similarity
-    userSimilarityOr = 0 # replace 0 with the correct code
+    userSimilarityOr = np.logical_or(iLike,userLikes) # replace 0 with the correct code
     
     # Calculate the similarity
-    userSimilarity = 0 # replace 0 with the correct code to calculate the Jaccard Index for each user
+    userSimilarity = userSimilarityOr / similarityAnd # replace 0 with the correct code to calculate the Jaccard Index for each user
     
     # Make the most similar user has a new like that the previous user did not have
     # I used a while loop.
@@ -30,7 +30,7 @@ def findSimilar(iLike, userLikes):
 def printMovie(id):
     # Print the id of the movie and the name.  This should look something like
     # "    - 430: Duck Soup (1933)" if the id is 430 and the name is Duck Soup (1933)
-    print(0) # replace 0 with the correct code
+    print(" -" +str(id) + ': ' + str(movieDict[id])) # replace 0 with the correct code
 
 def processLikes(iLike):
     print("\n\nSince you like:")
@@ -145,14 +145,16 @@ while numP < 11:
 ########################################################
 
 # Create a user likes numpy ndarray so we can use Jaccard Similarity
+
 # A user "likes" a movie if they rated it a 4 or 5
 # Create a numpy ndarray of zeros with demensions of max user id + 1 and max movie + 1 (because we'll use them as 1 indexed not zero indexed)
 
+
 # Find the max movie ID + 1
-maxMovie = 0 # replace 0 with the correct code
+maxMovie = np.max(movieData['movie']+1) # replace 0 with the correct code
 
 # Find the max user Id + 1
-maxUser = 0 # replace 0 with the correct code
+maxUser = np.max(movieData['user']+1) # replace 0 with the correct code
 
 # Create an array of 0s which will fill in with 1s when a user likes a movie
 userLikes = np.zeros((maxUser, maxMovie))
@@ -160,6 +162,11 @@ userLikes = np.zeros((maxUser, maxMovie))
 # Go through all the rows of the movie data.
 # If the user rated a movie as 4 or 5 set userLikes to 1 for that user and movie
 # Note: You'll need a for loop and an if statement
+for rows in movieData:
+    if rows['rating'] >= 4:
+        userLikes[rows['user'],rows['movie']] = 1
+
+
 
 
 ########################################################

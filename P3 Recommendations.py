@@ -24,13 +24,13 @@ def findSimilar(iLike, userLikes):
     found = False
     while found != True:
         maxIndex = np.argmax(userSimilarity)
-        i = 0
-        for x in userLikes[maxIndex]:
-            if x != 1:
+
+        likeDiff = userLikes[maxIndex] - iLike
+        for i in likeDiff:
+            if i == 1:
                 found = True
-            else:
-                i += 1
-        userSimilarity[maxIndex] = 0
+        if found != True:
+            userSimilarity[maxIndex] = 0
     # Print the max similarity number (most times this is something like 0.17
     print(maxIndex)
     print(userSimilarity[maxIndex])
